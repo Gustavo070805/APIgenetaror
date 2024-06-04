@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coral-reef-monitoring
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: coral-reef-monitoring
+  template:
+    metadata:
+      labels:
+        app: coral-reef-monitoring
+    spec:
+      containers:
+      - name: coral-reef-monitoring
+        image: <your-docker-image>
+        ports:
+        - containerPort: 80
+        env:
+        - name: MONGO_URL
+          valueFrom:
+            configMapKeyRef:
+              name: coral-reef-monitoring-config
+              key: MONGO_URL
